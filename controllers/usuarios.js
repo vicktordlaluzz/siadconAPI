@@ -5,7 +5,8 @@ const bcrypt = require('bcryptjs');
 
 const getUsuarios = async(req, res = response) => {
     try {
-        const usuarios = await Usuario.find().populate('Role', 'nombre');
+        const usuarios = await Usuario.find({ activo: true }, 'nombre email img').
+        populate('role', 'nombre descripcion');
 
         res.json({
             ok: true,
@@ -57,17 +58,81 @@ const createUsuario = async(req, res = response) => {
 };
 
 const updateUsuario = async(req, res = response) => {
-    res.json({
-        ok: true,
-        msg: 'SIADCON-updateUsuario'
-    });
+    const id = req.params.id;
+    // const uid = req.uid;
+    let pass = '';
+
+    try {
+        const usuarioDB = await Usuario.findById(id);
+
+        // Verifica si existe el usuario
+        if (!usuarioDB) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'No existe el usuario solicitado'
+            });
+        }
+
+        // Si se requiere actualizar la contraseña
+        if (req.body.pass) {
+            const salt = bcrypt.genSaltSync();
+            pass = bcrypt.hashSync(pass, salt);
+            await Usuario.findOneAndUpdate({ _id: id }, { pass: pass }, { new: true })
+            return res.json({
+                ok: true,
+                msg: 'Contraseña acutalizada'
+            });
+        }
+
+        // se guardan los cambios
+        await Usuario.findByIdAndUpdate({ _id: id }, req.body, { new: true });
+        res.json({
+            ok: true,
+            msg: 'Usuario actualizado con exito',
+        });
+
+    } catch (error) {
+
+        console.log(error);
+
+        res.status(500).json({
+            ok: false,
+            msg: 'Algo salio mal contacte al administrador'
+        });
+    }
 };
 
 const deleteUsuario = async(req, res = response) => {
-    res.json({
-        ok: true,
-        msg: 'SIADCON-deleteUsuario'
-    });
+    const id = req.params.id;
+    // const uid = req.uid;
+
+    try {
+        const usuarioDB = await Usuario.findById(id);
+
+        // Verifica si existe el usuario
+        if (!usuarioDB) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'No existe el usuario solicitado'
+            });
+        }
+
+        // se guardan los cambios
+        await Usuario.findByIdAndUpdate({ _id: id }, { activo: false }, { new: true });
+        res.json({
+            ok: true,
+            msg: 'Usuario eliminado con exito',
+        });
+
+    } catch (error) {
+
+        console.log(error);
+
+        res.status(500).json({
+            ok: false,
+            msg: 'Algo salio mal contacte al administrador'
+        });
+    }
 };
 
 module.exports = {
