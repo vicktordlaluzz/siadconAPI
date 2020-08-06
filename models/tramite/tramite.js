@@ -18,41 +18,41 @@ const tramiteSchema = Schema({
         required: true
     },
     registro: {
-        type: Schema.Types.ObjectId,
-        ref: 'Registro'
+        type: [Schema.Types.ObjectId],
+        ref: 'Registro',
         required: true
     },
     hipoteca: {
-        type: Schema.Types.ObjectId,
-        ref: 'Hipoteca'
+        type: [Schema.Types.ObjectId],
+        ref: 'Hipoteca',
         required: true
-    },  
+    },
     tipo: {
-        type: Schema.Types.ObjectId,
-        ref: 'TipoTramite'
+        type: [Schema.Types.ObjectId],
+        ref: 'TipoTramite',
         required: true
-    },  
+    },
     gastosDeducibles: {
-        type: Schema.Types.ObjectId[],
-        ref: 'TipoGasto'
+        type: [Schema.Types.ObjectId],
+        ref: 'TipoGasto',
         required: true
-    },  
+    },
     comentarios: {
         type: String,
     },
     usuarioAlta: {
-        type: Schema.Types.ObjectId,
-        ref: 'Usuario'
+        type: [Schema.Types.ObjectId],
+        ref: 'Usuario',
         required: true
     },
     usuarioMod: {
-        type: Schema.Types.ObjectId,
-        ref: 'Usuario'
+        type: [Schema.Types.ObjectId],
+        ref: 'Usuario',
         required: true
     },
     estado: {
-        type: Schema.Types.ObjectId,
-        ref: 'EstadoTramite'
+        type: [Schema.Types.ObjectId],
+        ref: 'EstadoTramite',
         required: true
     }
 });

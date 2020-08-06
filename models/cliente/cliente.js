@@ -18,36 +18,36 @@ const ClienteSchema = Schema({
         required: true
     },
     telefonos: {
-        type: Schema.Types.ObjectId[],
-        ref: 'Telefono'
+        type: [Schema.Types.ObjectId],
+        ref: 'Telefono',
         required: true
     },
     direcciones: {
-        type: Schema.Types.ObjectId[],
-        ref: 'Direccion'
+        type: [Schema.Types.ObjectId],
+        ref: 'Direccion',
         required: true
-    },  
+    },
     tramites: {
-        type: Schema.Types.ObjectId[],
+        type: [Schema.Types.ObjectId],
         ref: 'Tramite'
-    },  
+    },
     documentos: {
-        type: Schema.Types.ObjectId[],
-        ref: 'Documento'
+        type: [Schema.Types.ObjectId],
+        ref: 'Documento',
         required: true
-    },  
+    },
     fecha: {
         type: Date,
         required: true
     },
     usuarioA: {
         type: Schema.Types.ObjectId,
-        ref: 'Usuario'
+        ref: 'Usuario',
         required: true
     },
     usuarioM: {
         type: Schema.Types.ObjectId,
-        ref: 'Usuario'
+        ref: 'Usuario',
         required: true
     },
     comentarios: {

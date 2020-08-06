@@ -9,7 +9,7 @@ const TicketSchema = Schema({
         type: Schema.Types.ObjectId,
         ref: 'Usuario',
         required: true
-    }
+    },
     tramite: {
         type: Schema.Types.ObjectId,
         ref: 'Tramite',
@@ -17,17 +17,17 @@ const TicketSchema = Schema({
     },
     cliente: {
         type: Schema.Types.ObjectId,
-        ref: 'Cliente'
+        ref: 'Cliente',
         required: true
     },
     monto: {
         type: Number,
         required: true
-    },  
+    },
     formaPago: {
         type: String,
         required: true
-    },  
+    },
     comprobantePago: {
         type: Schema.Types.ObjectId,
         ref: 'Comprobante'
