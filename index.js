@@ -22,6 +22,7 @@ app.use(express.static('public'));
 // Rutas
 app.use('/api/roles', require('./routes/roles'));
 app.use('/api/usuarios', require('./routes/usuarios'));
+app.use('/api/clientes', require('./routes/clientes'));
 
 
 app.listen(process.env.PORT, () => {

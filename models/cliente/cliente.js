@@ -10,22 +10,18 @@ const ClienteSchema = Schema({
         required: true
     },
     amaterno: {
-        type: String,
-        required: true
+        type: String
     },
     email: {
-        type: String,
-        required: true
+        type: String
     },
     telefonos: {
         type: [Schema.Types.ObjectId],
-        ref: 'Telefono',
-        required: true
+        ref: 'Telefono'
     },
     direcciones: {
         type: [Schema.Types.ObjectId],
-        ref: 'Direccion',
-        required: true
+        ref: 'Direccion'
     },
     tramites: {
         type: [Schema.Types.ObjectId],
@@ -33,8 +29,7 @@ const ClienteSchema = Schema({
     },
     documentos: {
         type: [Schema.Types.ObjectId],
-        ref: 'Documento',
-        required: true
+        ref: 'Documento'
     },
     fecha: {
         type: Date,
