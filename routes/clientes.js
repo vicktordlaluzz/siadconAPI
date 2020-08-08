@@ -1,13 +1,15 @@
 const { Router } = require('express');
-// const { check } = require('express-validator');
-// const { validarCampos } = require('../middlewares/validar-campos');
-// const { validarJWT } = require('../middlewares/validar-jwt');
+const { check } = require('express-validator');
+const { validarCampos } = require('../middlewares/field-validator');
+const { validarJWT } = require('../middlewares/jwt-validator');
 
 const router = Router();
 const { getClientes, createCliente, updateCliente, deleteCliente } = require('../controllers/clientes');
 
 // Obtener todos los usuarios
-router.get('/', [], getClientes);
+router.get('/', [
+    validarJWT
+], getClientes);
 
 // Crear un nuevo usario
 router.post('/', [], createCliente);
