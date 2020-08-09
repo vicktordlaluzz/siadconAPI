@@ -13,7 +13,7 @@ router.get('/', [
 
 // Crear un nuevo usario
 router.post('/', [
-    validarJWT,
+    // validarJWT,
     check('nombre', 'El campo nombre es obligatorio').notEmpty(),
     check('email', 'El campo email debe contener un email valido').isEmail(),
     check('pass', 'La contraseña es obligatoria').notEmpty(),

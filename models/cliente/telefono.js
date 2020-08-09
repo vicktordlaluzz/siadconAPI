@@ -4,16 +4,21 @@ const TelefonoSchema = Schema({
     numero: {
         type: String,
         required: true
-    },  
+    },
     tipo: {
         type: String,
         required: true,
-    },  
+    },
     descripcion: {
         type: String
-    },  
+    },
     favorito: {
         type: Boolean,
+        required: true
+    },
+    cliente: {
+        type: Schema.Types.ObjectId,
+        ref: 'Cliente',
         required: true
     }
 });

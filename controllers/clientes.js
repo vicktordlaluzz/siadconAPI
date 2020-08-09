@@ -3,138 +3,135 @@ const Cliente = require('../models/cliente/cliente');
 const Direccion = require('../models/cliente/direccion');
 const Telefono = require('../models/cliente/telefono');
 const bcrypt = require('bcryptjs');
+const cliente = require('../models/cliente/cliente');
+const direccion = require('../models/cliente/direccion');
 // const { generarJWT } = require('../helpers/jwt');
 
 const getClientes = async(req, res = response) => {
     try {
-        const cliente = await Cliente.find({ activo: true }).
-        populate('role', 'nombre descripcion');
-
+        const clientes = await Cliente.find()
+            .populate('usuarioA', 'nombre')
+            .populate('usuarioM', 'nombre');
         res.json({
             ok: true,
-            usuarios
+            clientes
         });
     } catch (error) {
         console.log(error);
         res.status(500).json({
             ok: false,
             msg: 'Algo salio mal por favor contacte al administrador'
-        })
+        });
     }
-
 };
 
-const saveDireccion = async(dir) => {
+const updateDirecciones = async(direcciones) => {
     try {
-        const direccion = new Direccion(dir);
-        const dirDB = await direccion.save();
-        return id = dirDB._id;
+        for (const dir of Object.keys(direcciones)) {
+            await Direccion.findByIdAndUpdate(direcciones[dir]._id, direcciones[dir]);
+        }
     } catch (error) {
         console.log(error);
     }
-}
+};
 
-const saveTelefono = async(tel) => {
+const updateTelefonos = async(telefonos) => {
     try {
-        const telefono = new Telefono(tel);
-        const telDB = await telefono.save();
-        return telDB._id;
+        for (const tel of Object.keys(telefonos)) {
+            await Telefono.findByIdAndUpdate(telefonos[tel]._id, telefonos[tel]);
+        }
     } catch (error) {
         console.log(error);
     }
-}
+};
+
+const saveDireccion = async(dirs, idCliente) => {
+    try {
+        for (const dir of Object.keys(dirs)) {
+            let direccion = new Direccion(dirs[dir]);
+            direccion.cliente = idCliente;
+            await direccion.save();
+        }
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+const saveTelefono = async(tels, idCliente) => {
+    try {
+        for (const tel of Object.keys(tels)) {
+            let telefono = new Telefono(tels[tel]);
+            telefono.cliente = idCliente;
+            let telefonoDB = await telefono.save();
+            console.log(telefonoDB);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+};
 
 const createCliente = async(req, res = response) => {
     try {
-        /*
-        const direccion = await saveDireccion(req.body.direcciones);
-        console.log(direccion); 
-        const telefono = await saveTelefono(req.body.telefono);
-        console.log(req.body);
-        */
-
-
-
-        // const pass = req.body.pass;
-        // // Creacion del usuario
-        // const usuario = new Usuario(req.body);
-
-        // // Encriptacion de la contraseña
-        // const salt = bcrypt.genSaltSync();
-        // usuario.pass = bcrypt.hashSync(pass, salt);
-
-        // // Guardar usuario
-        // const usuarioDB = await usuario.save();
-
-        // // Respondemos con el usuario guardado
-        // res.json({
-        //     ok: true,
-        //     usuarioDB
-        // });
+        let cli = req.body.cliente;
+        cli.usuarioA = req.uid;
+        cli.usuarioM = req.uid;
+        const cliente = await Cliente(cli);
+        const clienteDB = await cliente.save();
+        await saveDireccion(req.body.direcciones, clienteDB._id);
+        await saveTelefono(req.body.telefonos, clienteDB._id);
         res.json({
             ok: true,
-            telefono
+            cliente
         })
 
     } catch (error) {
-        // Control del codigo de error
-        // if (error.code === 11000) {
-        //     return res.status(400).json({
-        //         ok: false,
-        //         msg: 'El email ya se encuentra registrado'
-        //     });
-        // }
-        // console.log(error);
-        // res.status(500).json({
-        //     ok: false,
-        //     msg: 'Error inesperado, por favor contacte con el administrador'
-        // });
         console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error inesperado contacte al administrador'
+        })
     }
 };
 
 const updateCliente = async(req, res = response) => {
-    const id = req.params.id;
-    // const uid = req.uid;
-    let pass = '';
-
+    const usuario = req.uid;
+    const cID = req.params.id;
     try {
-        const usuarioDB = await Usuario.findById(id);
-
-        // Verifica si existe el usuario
-        if (!usuarioDB) {
+        let clienteDB = await Cliente.findById(cID);
+        if (!clienteDB) {
             return res.status(400).json({
                 ok: false,
-                msg: 'No existe el usuario solicitado'
+                msg: 'No existe el cliente solicitado'
             });
         }
-
-        // Si se requiere actualizar la contraseña
-        if (req.body.pass) {
-            const salt = bcrypt.genSaltSync();
-            pass = bcrypt.hashSync(pass, salt);
-            await Usuario.findOneAndUpdate({ _id: id }, { pass: pass }, { new: true })
-            return res.json({
-                ok: true,
-                msg: 'Contraseña acutalizada'
-            });
+        if (req.body.direcciones) {
+            await updateDirecciones(req.body.direcciones);
         }
-
-        // se guardan los cambios
-        await Usuario.findByIdAndUpdate({ _id: id }, req.body, { new: true });
+        if (req.body.telefonos) {
+            await updateTelefonos(req.body.telefonos);
+        }
+        let update = {
+            nombre: req.body.cliente.nombre,
+            apaterno: req.body.cliente.apaterno,
+            amaterno: req.body.cliente.amaterno,
+            email: req.body.cliente.email,
+            fecha: new Date(),
+            usuarioM: usuario,
+            comentarios: req.body.cliente.comentarios,
+        }
+        console.log(req.body);
+        console.log(update);
+        await Cliente.findByIdAndUpdate(cID, update);
         res.json({
             ok: true,
-            msg: 'Usuario actualizado con exito',
-        });
-
+            msg: 'Cliente actualizado con exito'
+        })
     } catch (error) {
-
         console.log(error);
-
         res.status(500).json({
             ok: false,
             msg: 'Algo salio mal contacte al administrador'
-        });
+        })
     }
 };
 
@@ -143,21 +140,21 @@ const deleteCliente = async(req, res = response) => {
     // const uid = req.uid;
 
     try {
-        const usuarioDB = await Usuario.findById(id);
+        const clienteDB = await Cliente.findById(id);
 
         // Verifica si existe el usuario
-        if (!usuarioDB) {
+        if (!clienteDB) {
             return res.status(400).json({
                 ok: false,
-                msg: 'No existe el usuario solicitado'
+                msg: 'No existe el cliente solicitado'
             });
         }
 
         // se guardan los cambios
-        await Usuario.findByIdAndUpdate({ _id: id }, { activo: false }, { new: true });
+        await Cliente.findByIdAndUpdate({ _id: id }, { activo: false }, { new: true });
         res.json({
             ok: true,
-            msg: 'Usuario eliminado con exito',
+            msg: 'Cliente eliminado con exito',
         });
 
     } catch (error) {

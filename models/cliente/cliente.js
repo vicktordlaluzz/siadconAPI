@@ -15,25 +15,10 @@ const ClienteSchema = Schema({
     email: {
         type: String
     },
-    telefonos: {
-        type: [Schema.Types.ObjectId],
-        ref: 'Telefono'
-    },
-    direcciones: {
-        type: [Schema.Types.ObjectId],
-        ref: 'Direccion'
-    },
-    tramites: {
-        type: [Schema.Types.ObjectId],
-        ref: 'Tramite'
-    },
-    documentos: {
-        type: [Schema.Types.ObjectId],
-        ref: 'Documento'
-    },
     fecha: {
         type: Date,
-        required: true
+        required: true,
+        default: new Date()
     },
     usuarioA: {
         type: Schema.Types.ObjectId,
@@ -48,6 +33,10 @@ const ClienteSchema = Schema({
     comentarios: {
         type: String,
         required: true
+    },
+    activo: {
+        type: Boolean,
+        default: true
     }
 });
 

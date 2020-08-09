@@ -20,7 +20,7 @@ dbConnection();
 app.use(express.static('public'));
 
 // Rutas
-app.use('/api/roles', require('./routes/roles'));
+app.use('/api/usuarios/roles', require('./routes/roles'));
 app.use('/api/usuarios', require('./routes/usuarios'));
 app.use('/api/clientes', require('./routes/clientes'));
 app.use('/api/auth', require('./routes/auth'));

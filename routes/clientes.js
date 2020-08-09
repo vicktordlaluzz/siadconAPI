@@ -2,6 +2,7 @@ const { Router } = require('express');
 const { check } = require('express-validator');
 const { validarCampos } = require('../middlewares/field-validator');
 const { validarJWT } = require('../middlewares/jwt-validator');
+const { validarDirecciones, validarTelefonos } = require('../middlewares/custom-validators')
 
 const router = Router();
 const { getClientes, createCliente, updateCliente, deleteCliente } = require('../controllers/clientes');
@@ -12,10 +13,17 @@ router.get('/', [
 ], getClientes);
 
 // Crear un nuevo usario
-router.post('/', [], createCliente);
+router.post('/', [
+    validarJWT,
+    validarDirecciones,
+    validarTelefonos,
+    validarCampos
+], createCliente);
 
 // Actualiza un usuario
-router.put('/:id', [], updateCliente);
+router.put('/:id', [
+    validarJWT
+], updateCliente);
 
 // Actualiza un usuario
 router.delete('/:id', [], deleteCliente);

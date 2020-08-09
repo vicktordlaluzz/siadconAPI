@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const dbConnection = async() => {
     try {
-        await mongoose.connect('mongodb://localhost/SIADCON', {
+        await mongoose.connect(process.env.DB_CON, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true
