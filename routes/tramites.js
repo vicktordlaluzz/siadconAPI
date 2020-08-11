@@ -31,6 +31,13 @@ const {
     updateTipoTramite
 } = require('../controllers/tramites/tipoTramite');
 
+const {
+    getEstados,
+    createEstado,
+    deleteEstado,
+    updateEstado
+} = require('../controllers/tramites/estados')
+
 // Registros
 router.get('/registros', [
     validarJWT
@@ -107,7 +114,24 @@ router.delete('/tipos/:id', [
     validarJWT
 ], deleteTipooTramite);
 
+// estado tramite
+router.get('/estados', [
+    validarJWT
+], getEstados);
 
+router.post('/estados', [
+    validarJWT,
+    check('estado', 'El campo estado es obligatorio').notEmpty(),
+    check('descripcion', 'El campo descripcion es obligatorio').notEmpty(),
+    validarCampos
+], createEstado);
 
+router.put('/estados/:id', [
+    validarJWT
+], updateEstado);
+
+router.delete('/estados/:id', [
+    validarJWT
+], deleteEstado);
 
 module.exports = router;
