@@ -38,6 +38,13 @@ const {
     updateEstado
 } = require('../controllers/tramites/estados')
 
+const {
+    getTramites,
+    createTramite,
+    deleteTramite,
+    updateTramite
+} = require('../controllers/tramites/tramites')
+
 // Registros
 router.get('/registros', [
     validarJWT
@@ -133,5 +140,30 @@ router.put('/estados/:id', [
 router.delete('/estados/:id', [
     validarJWT
 ], deleteEstado);
+
+// tramites
+router.get('/', [
+    validarJWT
+], getTramites);
+
+router.post('/', [
+    validarJWT,
+    check('monto', 'El campo monto es obligatorio').notEmpty(),
+    check('anio', 'El campo año es obligatorio').notEmpty(),
+    check('registro', 'El campo registro es obligatorio').notEmpty(),
+    check('hipoteca', 'El campo hipoteca es obligatorio').notEmpty(),
+    check('cliente', 'El campo cliente es obligatorio').notEmpty(),
+    check('tipo', 'El campo tipo de tramite es obligatorio').notEmpty(),
+    check('estado', 'El campo estado de tramite es obligatorio').notEmpty(),
+    validarCampos
+], createTramite);
+
+router.put('/:id', [
+    validarJWT
+], updateTramite);
+
+router.delete('/:id', [
+    validarJWT
+], deleteTramite);
 
 module.exports = router;

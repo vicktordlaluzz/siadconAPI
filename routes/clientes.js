@@ -15,6 +15,11 @@ router.get('/', [
 // Crear un nuevo usario
 router.post('/', [
     validarJWT,
+    check('cliente.nombre', 'El campo nombre es obligatorio').notEmpty(),
+    check('cliente.apaterno', 'El campo nombre es obligatorio').notEmpty(),
+    check('cliente.curp', 'El campo nombre es obligatorio').notEmpty(),
+    check('cliente.rfc', 'El campo nombre es obligatorio').notEmpty(),
+    check('cliente.nss', 'El campo nombre es obligatorio').notEmpty(),
     validarDirecciones,
     validarTelefonos,
     validarCampos

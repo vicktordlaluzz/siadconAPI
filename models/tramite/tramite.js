@@ -18,17 +18,17 @@ const tramiteSchema = Schema({
         required: true
     },
     registro: {
-        type: [Schema.Types.ObjectId],
+        type: Schema.Types.ObjectId,
         ref: 'Registro',
         required: true
     },
     hipoteca: {
-        type: [Schema.Types.ObjectId],
+        type: Schema.Types.ObjectId,
         ref: 'Hipoteca',
         required: true
     },
     tipo: {
-        type: [Schema.Types.ObjectId],
+        type: Schema.Types.ObjectId,
         ref: 'TipoTramite',
         required: true
     },
@@ -41,18 +41,28 @@ const tramiteSchema = Schema({
         type: String,
     },
     usuarioAlta: {
-        type: [Schema.Types.ObjectId],
+        type: Schema.Types.ObjectId,
         ref: 'Usuario',
         required: true
     },
     usuarioMod: {
-        type: [Schema.Types.ObjectId],
+        type: Schema.Types.ObjectId,
         ref: 'Usuario',
         required: true
     },
     estado: {
-        type: [Schema.Types.ObjectId],
+        type: Schema.Types.ObjectId,
         ref: 'EstadoTramite',
+        required: true
+    },
+    cliente: {
+        type: Schema.Types.ObjectId,
+        ref: 'Cliente',
+        required: true
+    },
+    activo: {
+        type: Boolean,
+        default: true,
         required: true
     }
 });

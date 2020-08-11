@@ -20,6 +20,11 @@ const TelefonoSchema = Schema({
         type: Schema.Types.ObjectId,
         ref: 'Cliente',
         required: true
+    },
+    activo: {
+        type: Boolean,
+        default: true,
+        required: true
     }
 });
 

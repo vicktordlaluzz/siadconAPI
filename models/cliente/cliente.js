@@ -12,6 +12,17 @@ const ClienteSchema = Schema({
     amaterno: {
         type: String
     },
+    curp: {
+        type: String,
+        required: true
+    },
+    rfc: {
+        type: String,
+        required: true
+    },
+    nss: {
+        type: String
+    },
     email: {
         type: String
     },
