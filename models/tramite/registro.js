@@ -11,6 +11,16 @@ const RegistroSchema = Schema({
     },
     img: {
         type: String
+    },
+    activo: {
+        type: Boolean,
+        required: true,
+        default: true
+    },
+    usuario: {
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario',
+        required: true
     }
 
 });
