@@ -9,8 +9,14 @@ const HipotecaSchema = Schema({
         type: String,
         required: true
     },
-    img: {
-        type: String
+    activo: {
+        type: Boolean,
+        required: true,
+        default: true
+    },
+    usuario: {
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario',
     }
 
 });
