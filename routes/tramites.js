@@ -24,6 +24,13 @@ const {
     updateGasto
 } = require('../controllers/tramites/tipoGastos');
 
+const {
+    getTipoTramite,
+    createTipoTramite,
+    deleteTipooTramite,
+    updateTipoTramite
+} = require('../controllers/tramites/tipoTramite');
+
 // Registros
 router.get('/registros', [
     validarJWT
@@ -79,6 +86,26 @@ router.put('/gastos/:id', [
 router.delete('/gastos/:id', [
     validarJWT
 ], deleteGasto);
+
+// tipo tramite
+router.get('/tipos', [
+    validarJWT
+], getTipoTramite);
+
+router.post('/tipos', [
+    validarJWT,
+    check('nombre', 'El campo nombre es obligatorio').notEmpty(),
+    check('descripcion', 'El campo descripcion es obligatorio').notEmpty(),
+    validarCampos
+], createTipoTramite);
+
+router.put('/tipos/:id', [
+    validarJWT
+], updateTipoTramite);
+
+router.delete('/tipos/:id', [
+    validarJWT
+], deleteTipooTramite);
 
 
 
