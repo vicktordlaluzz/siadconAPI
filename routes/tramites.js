@@ -15,7 +15,14 @@ const {
     createHipoteca,
     udateHipoteca,
     deleteHipoteca
-} = require('../controllers/tramites/hipotecas')
+} = require('../controllers/tramites/hipotecas');
+
+const {
+    getTiposGasto,
+    createGasto,
+    deleteGasto,
+    updateGasto
+} = require('../controllers/tramites/tipoGastos');
 
 // Registros
 router.get('/registros', [
@@ -52,5 +59,28 @@ router.put('/hipotecas/:id', [
 router.delete('/hipotecas/:id', [
     validarJWT
 ], deleteHipoteca);
+
+// gastos
+router.get('/gastos', [
+    validarJWT
+], getTiposGasto);
+
+router.post('/gastos', [
+    validarJWT,
+    check('nombre', 'El campo nombre es obligatorio').notEmpty(),
+    check('descripcion', 'El campo descripcion es obligatorio').notEmpty(),
+    validarCampos
+], createGasto);
+
+router.put('/gastos/:id', [
+    validarJWT
+], updateGasto);
+
+router.delete('/gastos/:id', [
+    validarJWT
+], deleteGasto);
+
+
+
 
 module.exports = router;

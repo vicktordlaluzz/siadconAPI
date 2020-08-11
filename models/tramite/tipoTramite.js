@@ -8,6 +8,16 @@ const TipoTramiteSchema = Schema({
     descripcion: {
         type: String,
         required: true
+    },
+    activo: {
+        type: Boolean,
+        default: true,
+        required: true
+    },
+    usuario: {
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario',
+        required: true
     }
 });
 
