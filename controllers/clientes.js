@@ -2,10 +2,6 @@ const { response } = require('express');
 const Cliente = require('../models/cliente/cliente');
 const Direccion = require('../models/cliente/direccion');
 const Telefono = require('../models/cliente/telefono');
-const bcrypt = require('bcryptjs');
-const cliente = require('../models/cliente/cliente');
-const direccion = require('../models/cliente/direccion');
-// const { generarJWT } = require('../helpers/jwt');
 
 const getClientes = async(req, res = response) => {
     try {

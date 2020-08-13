@@ -1,10 +1,10 @@
 const { Schema, model } = require('mongoose');
 
 const TipoDocumentoSchema = Schema({
-    estado: {
+    tipo: {
         type: String,
         required: true
-    },  
+    },
     descripcion: {
         type: String,
         required: true
