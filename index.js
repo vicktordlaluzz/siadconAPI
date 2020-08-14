@@ -23,6 +23,7 @@ app.use('/api/usuarios', require('./routes/usuarios'));
 app.use('/api/clientes', require('./routes/clientes'));
 app.use('/api/tramites', require('./routes/tramites'));
 app.use('/api/documentos', require('./routes/documentos'));
+app.use('/api/tickets', require('./routes/tickets'));
 app.use('/api/auth', require('./routes/auth'));
 
 

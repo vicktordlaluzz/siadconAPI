@@ -4,19 +4,21 @@ const ComprobanteSchema = Schema({
     fecha: {
         type: Date,
         required: true
-    },  
+    },
     folio: {
-        type: String
-    },  
-    monto: {
-        type: Number,
-        required: true
-    },  
-    documento: {
         type: Schema.Types.ObjectId,
-        ref: 'Documento'
+        ref: 'Usuario',
+        required: true
+    },
+    monto: {
+        type: Schema.Types.ObjectId,
+        ref: 'Tramite',
+        required: true
+    },
+    img: {
+        type: String
     }
 });
 
 
-module.exports = model('Comprobante', ComprobanteSchema);
+module.exports = model('Comprobante', TicketSchema);
