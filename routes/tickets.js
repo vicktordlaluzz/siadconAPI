@@ -5,6 +5,9 @@ const { validarJWT } = require('../middlewares/jwt-validator');
 
 const router = Router();
 const { getTickets, createTicket, updateTicket } = require('../controllers/ticket/tickets');
+const { getComprobantes, createComprobante } = require('../controllers/ticket/comprobantes');
+const fileUpload = require('express-fileupload');
+
 
 // Obtener todos los usuarios
 router.get('/', [
@@ -25,5 +28,19 @@ router.post('/', [
 router.put('/:id', [
     validarJWT
 ], updateTicket);
+
+
+router.use(fileUpload());
+
+router.get('/comprobantes/', [
+    validarJWT
+], getComprobantes);
+
+router.post('/comprobantes/:ticket', [
+    validarJWT,
+    check('folio', 'El campo folio es obligatorio').notEmpty(),
+    check('monto', 'El campo monto es obligatorio').notEmpty(),
+    validarCampos
+], createComprobante);
 
 module.exports = router;
