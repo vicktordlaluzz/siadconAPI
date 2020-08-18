@@ -11,27 +11,29 @@ const login = async(req, res = response) => {
     try {
 
         // Verificar si el email existe
-        const usuarioDB = await Usuario.findOne({ email });
+        const usuario = (await Usuario.findOne({ email, activo: true }));
 
-        if (!usuarioDB) {
-            return res.status(404).json({
+        if (!usuario) {
+            return res.status(400).json({
                 ok: false,
                 msg: 'El usuario o la contraseña no son validos'
             });
         }
 
         // validar contrasena
-        const validarPass = bcrypt.compareSync(pass, usuarioDB.pass);
+        const validarPass = bcrypt.compareSync(pass, usuario.pass);
         if (!validarPass) {
-            return res.status(404).json({
+            return res.status(400).json({
                 ok: false,
                 msg: 'El usuario o la contraseña no son validos'
             });
         }
 
         // Generar el JWT
-        const token = await generarJWT(usuarioDB._id);
-
+        let usr = (await Usuario.findOne({ email, activo: true }).populate('role', 'nombre descripcion')).toObject();
+        delete usr.pass;
+        delete usr.activo;
+        const token = await generarJWT(usr._id, usr);
         res.json({
             ok: true,
             token

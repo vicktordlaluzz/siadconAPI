@@ -5,6 +5,16 @@ const UsuarioSchema = Schema({
         type: String,
         required: true
     },
+    apaterno: {
+        type: String,
+        required: true
+    },
+    amaterno: {
+        type: String
+    },
+    puesto: {
+        type: String
+    },
     email: {
         type: String,
         required: true,
@@ -19,7 +29,9 @@ const UsuarioSchema = Schema({
         default: true
     },
     img: {
-        type: String
+        type: String,
+        required: true,
+        default: 'no-img.jpg'
     },
     role: {
         type: Schema.Types.ObjectId,

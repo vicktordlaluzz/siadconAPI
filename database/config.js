@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 
 const dbConnection = async() => {
     try {
+        // REMOTA
+        // process.env.DB_CON
+        // LOCAL
+        // mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=false
         await mongoose.connect(process.env.DB_CON, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
