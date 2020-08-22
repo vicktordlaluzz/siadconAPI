@@ -1,14 +1,13 @@
 const jwt = require('jsonwebtoken');
 
 
-const generarJWT = (uid, usuario) => {
+const generarJWT = (uid) => {
 
     return new Promise((resolve, reject) => {
 
         // se arma el payload
         const pyload = {
-            uid,
-            usuario
+            uid
         };
 
         // se firma el payload 

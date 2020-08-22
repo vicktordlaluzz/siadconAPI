@@ -12,13 +12,26 @@ const UsuarioSchema = Schema({
     amaterno: {
         type: String
     },
+    rfc: {
+        type: String,
+        required: true
+    },
+    curp: {
+        type: String,
+        required: true
+    },
     puesto: {
-        type: String
+        type: String,
+        required: true
     },
     email: {
         type: String,
         required: true,
         unique: true
+    },
+    telefono: {
+        type: String,
+        required: true
     },
     pass: {
         type: String,
@@ -36,6 +49,31 @@ const UsuarioSchema = Schema({
     role: {
         type: Schema.Types.ObjectId,
         ref: 'Role'
+    },
+    direccion: {
+        calle: {
+            type: String,
+            required: true
+        },
+        numeroE: {
+            type: String,
+            default: 'sin numero'
+        },
+        numeroI: {
+            type: String
+        },
+        colonia: {
+            type: String,
+            required: true,
+        },
+        municipio: {
+            type: String,
+            required: true,
+        },
+        estado: {
+            type: String,
+            required: true,
+        }
     }
 
 });

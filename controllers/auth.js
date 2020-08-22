@@ -33,7 +33,7 @@ const login = async(req, res = response) => {
         let usr = (await Usuario.findOne({ email, activo: true }).populate('role', 'nombre descripcion')).toObject();
         delete usr.pass;
         delete usr.activo;
-        const token = await generarJWT(usr._id, usr);
+        const token = await generarJWT(usr._id);
         res.json({
             ok: true,
             token

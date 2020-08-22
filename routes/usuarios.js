@@ -3,32 +3,57 @@ const { check } = require('express-validator');
 const { validarCampos } = require('../middlewares/field-validator');
 const { validarJWT } = require('../middlewares/jwt-validator');
 
+const fileUpload = require('express-fileupload');
+
 const router = Router();
-const { getUsuarios, createUsuario, updateUsuario, deleteUsuario } = require('../controllers/usuarios');
+const { getUsuarios, createUsuario, updateUsuario, deleteUsuario, chargeImg, getImg, getUsuario } = require('../controllers/usuarios');
 
 // Obtener todos los usuarios
 router.get('/', [
-    validarJWT
+    //validarJWT
 ], getUsuarios);
 
 // Crear un nuevo usario
 router.post('/', [
     // validarJWT,
     check('nombre', 'El campo nombre es obligatorio').notEmpty(),
+    check('apaterno', 'El campo a. paterno es obligatorio').notEmpty(),
+    check('rfc', 'El campo rfc es obligatorio').notEmpty(),
+    check('curp', 'El campo curp es obligatorio').notEmpty(),
+    check('puesto', 'El campo puesto es obligatorio').notEmpty(),
+    check('calle', 'El campo calle es obligatorio').notEmpty(),
+    check('colonia', 'El campo puesto es obligatorio').notEmpty(),
+    check('estado', 'El campo puesto es obligatorio').notEmpty(),
+    check('municipio', 'El campo puesto es obligatorio').notEmpty(),
+    check('telefono', 'El campo puesto es obligatorio').notEmpty(),
     check('email', 'El campo email debe contener un email valido').isEmail(),
-    check('pass', 'La contraseña es obligatoria').notEmpty(),
-    check('role', 'El campo role es obligatorio').notEmpty(),
     validarCampos
 ], createUsuario);
 
 // Actualiza un usuario
 router.put('/:id', [
-    validarJWT
+    //validarJWT
 ], updateUsuario);
 
 // Actualiza un usuario
 router.delete('/:id', [
-    validarJWT
+    //validarJWT
 ], deleteUsuario);
+
+router.use(fileUpload());
+
+// obtener imgen de usuario
+router.get('/img/:img', [
+    //validarJWT
+], getImg);
+
+router.post('/img/:usuario', [
+    //validarJWT
+], chargeImg);
+
+router.get('/:usuario', [
+    //validarJWT
+], getUsuario);
+
 
 module.exports = router;

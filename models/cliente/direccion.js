@@ -5,11 +5,11 @@ const DireccionSchema = Schema({
         type: String,
         required: true
     },
-    n_ext: {
+    numeroE: {
         type: String,
         required: true,
     },
-    n_int: {
+    numeroI: {
         type: String
     },
     colonia: {

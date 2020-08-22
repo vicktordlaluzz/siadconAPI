@@ -67,6 +67,7 @@ const saveDocumento = async(req, res = response) => {
             });
         });
     } catch (error) {
+        console.log(error);
         res.status(500).json({
             ok: false,
             msg: 'Algo salio mal por favor contacte al administrador'
