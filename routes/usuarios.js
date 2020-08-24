@@ -10,12 +10,12 @@ const { getUsuarios, createUsuario, updateUsuario, deleteUsuario, chargeImg, get
 
 // Obtener todos los usuarios
 router.get('/', [
-    //validarJWT
+    validarJWT
 ], getUsuarios);
 
 // Crear un nuevo usario
 router.post('/', [
-    // validarJWT,
+    validarJWT,
     check('nombre', 'El campo nombre es obligatorio').notEmpty(),
     check('apaterno', 'El campo a. paterno es obligatorio').notEmpty(),
     check('rfc', 'El campo rfc es obligatorio').notEmpty(),
@@ -32,27 +32,25 @@ router.post('/', [
 
 // Actualiza un usuario
 router.put('/:id', [
-    //validarJWT
+    validarJWT
 ], updateUsuario);
 
 // Actualiza un usuario
 router.delete('/:id', [
-    //validarJWT
+    validarJWT
 ], deleteUsuario);
 
 router.use(fileUpload());
 
 // obtener imgen de usuario
-router.get('/img/:img', [
-    //validarJWT
-], getImg);
+router.get('/img/:img', [], getImg);
 
 router.post('/img/:usuario', [
-    //validarJWT
+    validarJWT
 ], chargeImg);
 
 router.get('/:usuario', [
-    //validarJWT
+    validarJWT
 ], getUsuario);
 
 

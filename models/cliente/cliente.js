@@ -42,8 +42,7 @@ const ClienteSchema = Schema({
         required: true
     },
     comentarios: {
-        type: String,
-        required: true
+        type: String
     },
     activo: {
         type: Boolean,

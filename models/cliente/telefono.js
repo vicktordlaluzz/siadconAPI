@@ -1,20 +1,16 @@
 const { Schema, model } = require('mongoose');
 
 const TelefonoSchema = Schema({
-    numero: {
+    telefono: {
         type: String,
         required: true
     },
-    tipo: {
+    tipoTelefono: {
         type: String,
         required: true,
     },
     descripcion: {
         type: String
-    },
-    favorito: {
-        type: Boolean,
-        required: true
     },
     cliente: {
         type: Schema.Types.ObjectId,

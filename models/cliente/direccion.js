@@ -7,7 +7,7 @@ const DireccionSchema = Schema({
     },
     numeroE: {
         type: String,
-        required: true,
+        default: 'Sin numero'
     },
     numeroI: {
         type: String
@@ -24,9 +24,9 @@ const DireccionSchema = Schema({
         type: String,
         required: true,
     },
-    favorita: {
-        type: Boolean,
-        required: true
+    cp: {
+        type: String,
+        required: true,
     },
     cliente: {
         type: Schema.Types.ObjectId,

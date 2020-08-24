@@ -98,9 +98,11 @@ const updateUsuario = async(req, res = response) => {
 
         // Si se requiere actualizar la contraseña
         if (req.body.pass) {
+            let pass = req.body.pass;
             const salt = bcrypt.genSaltSync();
             pass = bcrypt.hashSync(pass, salt);
-            await Usuario.findOneAndUpdate({ _id: id }, { pass: pass }, { new: true });
+            const usuario = await Usuario.findOneAndUpdate({ _id: id }, { pass: pass }, { new: true });
+            console.log(usuario);
             return res.json({
                 ok: true,
                 msg: 'Contraseña acutalizada'

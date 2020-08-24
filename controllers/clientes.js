@@ -58,8 +58,7 @@ const saveTelefono = async(tels, idCliente) => {
         for (const tel of Object.keys(tels)) {
             let telefono = new Telefono(tels[tel]);
             telefono.cliente = idCliente;
-            let telefonoDB = await telefono.save();
-            console.log(telefonoDB);
+            await telefono.save();
         }
     } catch (error) {
         console.log(error);
@@ -68,24 +67,31 @@ const saveTelefono = async(tels, idCliente) => {
 
 const createCliente = async(req, res = response) => {
     try {
-        let cli = req.body.cliente;
-        cli.usuarioA = req.uid;
-        cli.usuarioM = req.uid;
-        const cliente = await Cliente(cli);
+        const cliente = Cliente({
+            nombre: req.body.nombre,
+            apaterno: req.body.apaterno,
+            amaterno: req.body.amaterno,
+            rfc: req.body.rfc,
+            curp: req.body.curp,
+            nss: req.body.nss,
+            email: req.body.email || null,
+            usuarioA: req.uid,
+            usuarioM: req.uid
+        });
         const clienteDB = await cliente.save();
         await saveDireccion(req.body.direcciones, clienteDB._id);
-        await saveTelefono(req.body.telefonos, clienteDB._id);
+        // await saveTelefono(req.body.telefonos, clienteDB._id);
         res.json({
             ok: true,
-            cliente
-        })
-
+            clienteDB,
+            msg: 'Se ha guardado el cliente con exito :D'
+        });
     } catch (error) {
         console.log(error);
         res.status(500).json({
             ok: false,
             msg: 'Error inesperado contacte al administrador'
-        })
+        });
     }
 };
 
