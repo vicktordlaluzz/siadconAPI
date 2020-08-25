@@ -10,8 +10,8 @@ const TipoDocumentoSchema = Schema({
         required: true
     },
     tipoDocumento: {
-        type: Schema.Types.ObjectId,
-        ref: 'TipoDocumento'
+        type: String,
+        required: true
     },
     cliente: {
         type: Schema.Types.ObjectId,

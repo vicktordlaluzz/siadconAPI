@@ -6,6 +6,7 @@ const Documento = require('../../models/documento/documento')
 
 const saveDocumento = async(req, res = response) => {
 
+    console.log(req);
     const cliente = req.params.cliente;
 
     try {
@@ -27,7 +28,7 @@ const saveDocumento = async(req, res = response) => {
         const extencion = nombreCortado[nombreCortado.length - 1];
 
         // extenciones de archivo validas
-        const extencionesValidas = ['pdf'];
+        const extencionesValidas = ['pdf', 'PDF'];
 
         // se valida si el archivo tiene una extencion valida
         if (!extencionesValidas.includes(extencion)) {
@@ -62,7 +63,7 @@ const saveDocumento = async(req, res = response) => {
             const documentoDB = await documento.save();
             res.json({
                 ok: true,
-                msg: 'archivo cargado con exito',
+                msg: 'Archivo cargado con exito',
                 documentoDB
             });
         });

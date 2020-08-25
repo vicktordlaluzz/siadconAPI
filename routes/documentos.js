@@ -8,6 +8,7 @@ const { getTipos, createTipo, deleteTipo } = require('../controllers/documentos/
 const { getDocumentos, saveDocumento, getDocumento, deleteDocumento } = require('../controllers/documentos/documentos');
 
 
+
 // Obtener todos los docuemtos de un cliente
 router.get('/tipos', [
     validarJWT
@@ -32,7 +33,7 @@ router.get('/:cliente', [
 ], getDocumentos);
 
 // Sube un nuevo documento
-router.put('/:cliente', [
+router.post('/:cliente', [
     validarJWT,
     check('tipoDocumento', 'No se indico el tipo de documento').notEmpty(),
     check('comentarios', 'Porfavor agregue una descripcion').notEmpty(),
