@@ -137,6 +137,26 @@ const updateCliente = async(req, res = response) => {
     }
 };
 
+const getCliente = async(req, res = response) => {
+    const clienteID = req.params.cliente;
+    try {
+        const cliente = await Cliente.findById(clienteID);
+        const direcciones = await Direccion.find({ cliente: clienteID });
+        const telefonos = await Telefono.find({ cliente: clienteID });
+        res.json({
+            ok: true,
+            cliente,
+            direcciones,
+            telefonos
+        })
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Algo salio mal por favor contacte al administrador'
+        })
+    }
+}
+
 const deleteCliente = async(req, res = response) => {
     const id = req.params.id;
     // const uid = req.uid;
@@ -174,5 +194,6 @@ module.exports = {
     getClientes,
     createCliente,
     updateCliente,
-    deleteCliente
+    deleteCliente,
+    getCliente
 }

@@ -5,7 +5,7 @@ const { validarJWT } = require('../middlewares/jwt-validator');
 const { validarDirecciones, validarTelefonos } = require('../middlewares/custom-validators')
 
 const router = Router();
-const { getClientes, createCliente, updateCliente, deleteCliente } = require('../controllers/clientes');
+const { getClientes, createCliente, updateCliente, deleteCliente, getCliente } = require('../controllers/clientes');
 
 // Obtener todos los usuarios
 router.get('/', [
@@ -30,6 +30,9 @@ router.put('/:id', [
     validarJWT
 ], updateCliente);
 
+router.get('/:cliente', [
+    validarJWT
+], getCliente);
 // Actualiza un usuario
 router.delete('/:id', [], deleteCliente);
 
