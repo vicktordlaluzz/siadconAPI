@@ -13,6 +13,10 @@ const TipoDocumentoSchema = Schema({
         type: String,
         required: true
     },
+    fecha: {
+        type: Date,
+        default: new Date()
+    },
     cliente: {
         type: Schema.Types.ObjectId,
         ref: 'Cliente'

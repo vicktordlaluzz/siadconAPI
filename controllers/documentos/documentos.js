@@ -112,22 +112,38 @@ const getDocumento = async(req, res = response) => {
 };
 
 const deleteDocumento = async(req, res = response) => {
-    const documento = req.params.documento;
 
-    let pathDoc = path.join(__dirname, `../../uploads/documentos/${documento}`);
+    const documentoID = req.params.documento;
+    try {
+        const docDB = await Documento.findById(documentoID);
+        if (!docDB) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Error en la solicitud'
+            });
+        }
+        let pathDoc = path.join(__dirname, `../../uploads/documentos/${docDB.img}`);
 
-    if (fs.existsSync(pathDoc)) {
-        fs.unlinkSync(pathDoc);
-        res.json({
-            ok: true,
-            msg: 'Se ha eliminado el documento'
-        })
-    } else {
-        res.status(400).json({
-            ok: false,
-            msg: 'Algo salio mal por favor contacte al administrador'
-        })
+        if (fs.existsSync(pathDoc)) {
+            fs.unlinkSync(pathDoc);
+            await Documento.findByIdAndDelete(documentoID);
+            res.json({
+                ok: true,
+                msg: 'Se ha eliminado el documento'
+            })
+        } else {
+            res.status(500).json({
+                ok: false,
+                msg: 'Algo salio mal por favor contacte al administrador'
+            })
+        }
+
+    } catch (error) {
+
     }
+
+
+
 };
 
 
