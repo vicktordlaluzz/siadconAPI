@@ -47,11 +47,20 @@ const login = async(req, res = response) => {
     }
 };
 
-const isLogged = async(req, res = response) => {
-    res.json({
-        ok: true,
-        msg: 'El usuario esta loggeado correctamente'
-    });
+const renewToken = async(req, res = response) => {
+    try {
+        const token = await generarJWT(req.uid);
+        res.json({
+            ok: true,
+            token
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Error inesperado por favor contacte al administrador'
+        })
+    }
 };
 
 const changePass = async(req, res = response) => {
@@ -88,6 +97,6 @@ const changePass = async(req, res = response) => {
 
 module.exports = {
     login,
-    isLogged,
+    renewToken,
     changePass
 };
