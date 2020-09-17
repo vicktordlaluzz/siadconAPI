@@ -3,42 +3,52 @@ const { Schema, model } = require('mongoose');
 const tramiteSchema = Schema({
     fechaI: {
         type: Date,
-        required: true
+        default: new Date()
     },
     modificacion: {
-        type: Date,
-        required: true
+        type: Date
     },
-    monto: {
+    montoS: {
         type: Number,
         required: true
+    },
+    montoA: {
+        type: Number
+    },
+    honorario: {
+        type: Number
     },
     anio: {
         type: Number,
         required: true
     },
     registro: {
-        type: Schema.Types.ObjectId,
-        ref: 'Registro',
-        required: true
+        registro: {
+            type: Schema.Types.ObjectId,
+            ref: 'Registro'
+        },
+        monto: {
+            type: Number
+        },
+        required: false
     },
     hipoteca: {
-        type: Schema.Types.ObjectId,
-        ref: 'Hipoteca',
-        required: true
+        registro: {
+            type: Schema.Types.ObjectId,
+            ref: 'Hipoteca'
+        },
+        monto: {
+            type: Number
+        },
+        required: false
     },
     tipo: {
         type: Schema.Types.ObjectId,
         ref: 'TipoTramite',
         required: true
     },
-    gastosDeducibles: {
-        type: [Schema.Types.ObjectId],
-        ref: 'TipoGasto',
-        required: true
-    },
     comentarios: {
-        type: String,
+        type: String
     },
     usuarioAlta: {
         type: Schema.Types.ObjectId,
@@ -52,8 +62,7 @@ const tramiteSchema = Schema({
     },
     estado: {
         type: Schema.Types.ObjectId,
-        ref: 'EstadoTramite',
-        required: true
+        ref: 'EstadoTramite'
     },
     cliente: {
         type: Schema.Types.ObjectId,

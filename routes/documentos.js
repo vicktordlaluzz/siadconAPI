@@ -9,11 +9,12 @@ const { getDocumentos, saveDocumento, getDocumento, deleteDocumento } = require(
 
 
 
-// Obtener todos los docuemtos de un cliente
+// Obtiene todos los documentos de la coleccion tipoDocumento
 router.get('/tipos', [
     validarJWT
 ], getTipos);
 
+// Inserta un nuevo documento en la coleccion tipoDocumento
 router.post('/tipos', [
     validarJWT,
     check('tipo', 'El campo tipo es obligatorio').notEmpty(),
@@ -21,6 +22,7 @@ router.post('/tipos', [
     validarCampos
 ], createTipo);
 
+// Elimina un documento de la coleccion tipoDocumento
 router.delete('/tipos/:id', [
     validarJWT
 ], deleteTipo);
@@ -28,12 +30,12 @@ router.delete('/tipos/:id', [
 router.use(fileUpload());
 
 // Obtener todos los docuemtos de un cliente
-router.get('/:cliente', [
+router.get('/:tramite', [
     validarJWT
 ], getDocumentos);
 
 // Sube un nuevo documento
-router.post('/:cliente', [
+router.post('/:tramite', [
     validarJWT,
     check('tipoDocumento', 'No se indico el tipo de documento').notEmpty(),
     check('comentarios', 'Porfavor agregue una descripcion').notEmpty(),

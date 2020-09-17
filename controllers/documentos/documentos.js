@@ -7,7 +7,7 @@ const Documento = require('../../models/documento/documento')
 const saveDocumento = async(req, res = response) => {
 
     console.log(req);
-    const cliente = req.params.cliente;
+    const tramite = req.params.tramite;
 
     try {
         // validar si se envio algun archivo
@@ -58,8 +58,10 @@ const saveDocumento = async(req, res = response) => {
                 img: nombreArchivo,
                 comentarios: req.body.comentarios,
                 tipoDocumento: req.body.tipoDocumento,
-                cliente: cliente
-            })
+                tramite: tramite
+            });
+            console.log(tramite);
+            console.log(documento);
             const documentoDB = await documento.save();
             res.json({
                 ok: true,
@@ -80,10 +82,11 @@ const saveDocumento = async(req, res = response) => {
 };
 
 const getDocumentos = async(req, res = response) => {
-    const cliente = req.params.cliente;
+    const tramite = req.params.tramite;
 
     try {
-        let docs = await Documento.find({ cliente: cliente });
+        let docs = await Documento.find({ tramite: tramite })
+            .populate('tipoDocumento', 'tipo');
 
         res.json({
             ok: true,

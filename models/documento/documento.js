@@ -10,18 +10,17 @@ const TipoDocumentoSchema = Schema({
         required: true
     },
     tipoDocumento: {
-        type: String,
-        required: true
+        type: Schema.Types.ObjectId,
+        ref: 'TipoDocumento'
     },
     fecha: {
         type: Date,
         default: new Date()
     },
-    cliente: {
+    tramite: {
         type: Schema.Types.ObjectId,
-        ref: 'Cliente'
+        ref: 'Tramite'
     }
 });
-
 
 module.exports = model('Documento', TipoDocumentoSchema);

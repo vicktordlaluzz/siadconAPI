@@ -42,7 +42,9 @@ const {
     getTramites,
     createTramite,
     deleteTramite,
-    updateTramite
+    updateTramite,
+    getTramite,
+    getByCliente
 } = require('../controllers/tramites/tramites')
 
 // Registros
@@ -146,15 +148,16 @@ router.get('/', [
     validarJWT
 ], getTramites);
 
+router.get('/:tramiteID', [
+    validarJWT
+], getTramite);
+
 router.post('/', [
     validarJWT,
-    check('monto', 'El campo monto es obligatorio').notEmpty(),
+    check('montoS', 'El campo monto solicitado es obligatorio').notEmpty(),
     check('anio', 'El campo año es obligatorio').notEmpty(),
-    check('registro', 'El campo registro es obligatorio').notEmpty(),
-    check('hipoteca', 'El campo hipoteca es obligatorio').notEmpty(),
     check('cliente', 'El campo cliente es obligatorio').notEmpty(),
-    check('tipo', 'El campo tipo de tramite es obligatorio').notEmpty(),
-    check('estado', 'El campo estado de tramite es obligatorio').notEmpty(),
+    check('tipoTramite', 'El campo tipo de tramite es obligatorio').notEmpty(),
     validarCampos
 ], createTramite);
 
@@ -165,5 +168,10 @@ router.put('/:id', [
 router.delete('/:id', [
     validarJWT
 ], deleteTramite);
+
+// getTramites byCliente
+router.get('/cliente/:clienteId', [
+    validarJWT
+], getByCliente);
 
 module.exports = router;

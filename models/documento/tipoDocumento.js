@@ -7,7 +7,7 @@ const TipoDocumentoSchema = Schema({
     },
     descripcion: {
         type: String,
-        required: true
+        default: 'Descripcion'
     }
 });
 

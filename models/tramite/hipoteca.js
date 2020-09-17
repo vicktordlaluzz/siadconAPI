@@ -17,6 +17,7 @@ const HipotecaSchema = Schema({
     usuario: {
         type: Schema.Types.ObjectId,
         ref: 'Usuario',
+        required: true
     }
 
 });

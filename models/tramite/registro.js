@@ -9,9 +9,6 @@ const RegistroSchema = Schema({
         type: String,
         required: true
     },
-    img: {
-        type: String
-    },
     activo: {
         type: Boolean,
         required: true,

@@ -5,8 +5,8 @@ const dbConnection = async() => {
         // REMOTA
         // process.env.DB_CON
         // LOCAL
-        // mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=false
-        await mongoose.connect(process.env.DB_CON, {
+        // process.env.DB_CON_LOCAL
+        await mongoose.connect(process.env.DB_CON_LOCAL, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true
