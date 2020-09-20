@@ -20,7 +20,7 @@ router.post('/', [
     check('curp', 'El campo nombre es obligatorio').notEmpty(),
     check('rfc', 'El campo nombre es obligatorio').notEmpty(),
     check('nss', 'El campo nombre es obligatorio').notEmpty(),
-    check('direcciones', 'Se debe definir al menos una direccion valida').notEmpty(),
+    //check('direcciones', 'Se debe definir al menos una direccion valida').notEmpty(),
     //check('telefonos', 'Se debe definir al menos un numero de contacto valido').notEmpty(),
     validarCampos
 ], createCliente);

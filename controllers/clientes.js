@@ -5,7 +5,7 @@ const Telefono = require('../models/cliente/telefono');
 
 const getClientes = async(req, res = response) => {
     try {
-        const clientes = await Cliente.find()
+        const clientes = await Cliente.find().sort('fecha')
             .populate('usuarioA', 'nombre')
             .populate('usuarioM', 'nombre');
         res.json({
@@ -43,11 +43,10 @@ const updateTelefonos = async(telefonos) => {
 
 const saveDireccion = async(dirs, idCliente) => {
     try {
-        for (const dir of Object.keys(dirs)) {
-            let direccion = new Direccion(dirs[dir]);
-            direccion.cliente = idCliente;
-            await direccion.save();
-        }
+        let direccion = new Direccion(dirs);
+        direccion.cliente = idCliente;
+        await direccion.save();
+
     } catch (error) {
         console.log(error);
     }
@@ -79,8 +78,17 @@ const createCliente = async(req, res = response) => {
             usuarioM: req.uid
         });
         const clienteDB = await cliente.save();
-        await saveDireccion(req.body.direcciones, clienteDB._id);
-        // await saveTelefono(req.body.telefonos, clienteDB._id);
+        const direccion = {
+            calle: req.body.calle,
+            numeroE: req.body.numeroE,
+            numeroI: req.body.numeroI,
+            colonia: req.body.colonia,
+            estado: req.body.estado,
+            municipio: req.body.municipio,
+            cp: req.body.cp
+        }
+        await saveDireccion(direccion, clienteDB._id);
+        await saveTelefono(req.body.telefonos, clienteDB._id);
         res.json({
             ok: true,
             clienteDB,
